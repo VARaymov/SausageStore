@@ -47,6 +47,6 @@ telegram-notification-frontend:
     changes:
       - frontend/*
   script: 
-    # - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал фронтенд. Артефакт можно посмотреть по сслыке ({{$FRONTEND_ARTIFACTS_URL}})"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал фронтенд. Артефакт можно посмотреть по сслыке '$FRONTEND_ARTIFACTS_URL' "}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-frontend-code-job
