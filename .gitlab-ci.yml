@@ -13,9 +13,9 @@ build-backend-code-job:
     changes:
       - backend/*
   script:
+    - echo "BACKEND_JOB=$CI_JOB_ID" >> build.env
     - cd backend
     - mvn package
-    - echo "BACKEND_JOB=$CI_JOB_ID" >> build.env
   artifacts:
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
@@ -41,7 +41,7 @@ telegram-notification-backend:
     changes:
       - backend/*
   script:
-    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал бекенд. Артефакт можно посмотреть по ссылке '$BACKEND_ARTIFACTS_URL' "}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал бекенд. Артефакт можно посмотреть по ссылке '$BACKEND_JOB' "}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-backend-code-job
 
