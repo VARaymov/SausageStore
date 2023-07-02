@@ -35,10 +35,10 @@ sonarqube-frontend-sast:
     - cd frontend
     - npm install --quiet
     - npm run build
-    - sonar-scanner 
-      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND}
-      -Dsonar.sources=.
-      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND}
+    - sonar-scanner \
+      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} \
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
 
 
