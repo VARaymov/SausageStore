@@ -2,10 +2,6 @@ stages:
   - build
   - notify
 
-variables:
-  BACKEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$BACKEND_JOB/artifacts/browse/backend/target/sausage-store-0.0.1-SNAPSHOT.jar"
-  FRONTEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/frontend/dist/frontend"
-
 build-backend-code-job:
   stage: build
   only:
@@ -15,6 +11,9 @@ build-backend-code-job:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> build.env
     - cd backend
     - mvn package
+    - cd target
+    - mkdir java
+    - mv sausage-store-0.0.1-SNAPSHOT.jar java
   artifacts:
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
@@ -44,8 +43,6 @@ telegram-notification-backend:
     changes:
       - backend/*
   script:
-    # - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал бекенд. Артефакт можно посмотреть по ссылке '$BACKEND_JOB' "}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
-
     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал бекенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$BACKEND_JOB'/artifacts/browse/backend/target/sausage-store-0.0.1-SNAPSHOT.jar""}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-backend-code-job
@@ -56,7 +53,6 @@ telegram-notification-frontend:
     changes:
       - frontend/*
   script: 
-    # - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал фронтенд. Артефакт можно посмотреть по сслыке '$FRONTEND_ARTIFACTS_URL' "}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал фронтенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$FRONTEND_JOB'/artifacts/browse/frontend/dist/frontend"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-frontend-code-job
