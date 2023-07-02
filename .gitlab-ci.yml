@@ -3,7 +3,8 @@ stages:
   - notify
 
 variables:
-  BACKEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/sausage-store-0.0.1/sausage-store-0.0.1.jar"
+  # BACKEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/sausage-store-0.0.1/sausage-store-0.0.1.jar"
+  BACKEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$BACKEND_JOB/artifacts/browse/sausage-store-0.0.1/sausage-store-0.0.1.jar"
   FRONTEND_ARTIFACTS_URL: "$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/browse/frontend/dist/frontend"
 
 build-backend-code-job:
@@ -14,9 +15,12 @@ build-backend-code-job:
   script:
     - cd backend
     - mvn package
+    - echo "BACKEND_JOB=$CI_JOB_ID" >> build.env
   artifacts:
     paths:
       - backend/target/sausage-store-0.0.1-SNAPSHOT.jar
+    reports:
+      dotenv: build.env
 
 build-frontend-code-job:
   stage: build
