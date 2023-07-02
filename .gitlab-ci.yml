@@ -43,7 +43,7 @@ telegram-notification-backend:
     changes:
       - backend/*
   script:
-    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал бекенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$BACKEND_JOB'/artifacts/browse/backend/target/java"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Валерий собрал бекенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$BACKEND_JOB'/artifacts/browse/backend/target/java"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-backend-code-job
 
@@ -53,6 +53,6 @@ telegram-notification-frontend:
     changes:
       - frontend/*
   script: 
-    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Test собрал фронтенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$FRONTEND_JOB'/artifacts/browse/frontend/dist/frontend"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Валерий собрал фронтенд. Артефакт можно посмотреть по ссылке  https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$FRONTEND_JOB'/artifacts/browse/frontend/dist/frontend"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - build-frontend-code-job
