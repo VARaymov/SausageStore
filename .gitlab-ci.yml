@@ -30,10 +30,11 @@ sonarqube-frontend-sast:
   stage: test
   image: node:16
   script:
+    # - cd frontend
     - npm install -g sonarqube-scanner
     - sonar-scanner 
        -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND}
-       -Dsonar.sources=. 
+       -Dsonar.sources= frontend
        -Dsonar.host.url=${SONARQUBE_URL_FRONTEND}
        -Dsonar.login=${SONAR_LOGIN_FRONTEND}
 
