@@ -17,11 +17,11 @@ include:
 
 sonarqube_analysis:
   script:
-     - sonar-scanner 
-     - Dsonar.projectKey=YPFrontend 
-     - Dsonar.sources=. 
-     - Dsonar.host.url=https://sonarqube.praktikum-services.ru 
-     - Dsonar.login=ece7a810aa3baa9480146a77e29f58da22c1b7d8
+    -sonar-scanner \
+      -Dsonar.projectKey=YPFrontend \
+      -Dsonar.sources=. \
+      -Dsonar.host.url=https://sonarqube.praktikum-services.ru \
+      -Dsonar.login=ece7a810aa3baa9480146a77e29f58da22c1b7d8
 
 build-backend-code-job:
   stage: build
