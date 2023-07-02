@@ -30,7 +30,7 @@ sonarqube-backend-sast:
 
 sonarqube-frontend-sast:
   stage: test
-  image: node:16
+  image: node:8
   script:
     - cd frontend
     - npm install --quiet
