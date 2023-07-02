@@ -34,6 +34,7 @@ sonarqube-frontend-sast:
   script:
     - cd frontend
     - npm install --quiet
+    - npm run build
     - sonar-scanner 
       -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND}
       -Dsonar.sources=.
