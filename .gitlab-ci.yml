@@ -30,6 +30,7 @@ sonarqube-backend-sast:
       -Dsonar.projectKey=${SONAR_PROJECT_KEY_BACKEND}
       -Dsonar.host.url=${SONARQUBE_URL_BACKEND}
       -Dsonar.login=${SONAR_LOGIN_BACKEND}
+      -Dsonar.projectName="19_RAYUMOVVALERY_BACKEND"
 
 sonarqube-frontend-sast:
   stage: test
@@ -45,6 +46,7 @@ sonarqube-frontend-sast:
       -Dsonar.sources=.
       -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} 
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
+      -Dsonar.projectName="19_RAYUMOVVALERY_FRONTEND"
   needs:
     - build-frontend-code-job
 
