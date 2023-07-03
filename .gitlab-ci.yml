@@ -94,6 +94,7 @@ build-backend-code-job:
   artifacts:
     paths:
       - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
+      - backend/.m2/repository
     reports:
       dotenv: backend.env
 
