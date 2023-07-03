@@ -30,13 +30,12 @@ sonarqube-backend-sast:
 
 sonarqube-frontend-sast:
   stage: test
-  image: sonarsource/sonar-scanner-cli
+  image: node:16
   script:
     - cd frontend
-    - apt-get update
     - npm install --quiet
     - npm run build
-    - sonar-scanner \
+    - sonarsource/sonar-scanner-cli:4.6 \
       -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} \
       -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} \
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
