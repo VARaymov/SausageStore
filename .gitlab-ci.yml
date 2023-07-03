@@ -33,7 +33,7 @@ sonarqube-frontend-sast:
   image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
-    - sudo apt-get update
+    - apt-get update
     - npm install --quiet
     - npm run build
     - sonar-scanner \
