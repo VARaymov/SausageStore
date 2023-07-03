@@ -30,12 +30,14 @@ sonarqube-backend-sast:
 
 sonarqube-frontend-sast:
   stage: test
-  image: node:16
+  image: sonarsource/sonar-scanner-cli
   script:
     - cd frontend
-    - sonarsource/sonar-scanner-cli:4.6 \
-      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} \
-      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} \
+    - >
+      sonar-scanner -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} 
+      -Dsonar.sources=.
+      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} 
       -Dsonar.login=${SONAR_LOGIN_FRONTEND}
 
 
