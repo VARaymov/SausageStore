@@ -25,6 +25,8 @@ spotbugs-sast:
   artifacts:
     paths:
       - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
+  needs:
+    - build-backend-code-job
 
 # sportbugs-sast:
 #   stage: test
