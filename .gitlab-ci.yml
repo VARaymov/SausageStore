@@ -33,8 +33,6 @@ sonarqube-frontend-sast:
   image: node:16
   script:
     - cd frontend
-    - npm install --quiet
-    - npm run build
     - sonarsource/sonar-scanner-cli:4.6 \
       -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} \
       -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} \
