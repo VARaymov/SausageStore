@@ -21,7 +21,7 @@ spotbugs-sast:
   variables:
     COMPILE: "false"
     SAST_JAVA_VERSION: 11
-    MAVEN_REPO_PATH: $CI_PROJECT_DIR/.m2/repository
+    MAVEN_REPO_PATH: $CI_PROJECT_DIR/backend/.m2/repository
   artifacts:
     paths:
       - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
@@ -86,11 +86,11 @@ build-backend-code-job:
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
-    - mvn package -Dmaven.repo.local="$CI_PROJECT_DIR"/.m2/repository
+    - mvn package -Dmaven.repo.local="$CI_PROJECT_DIR"/backend/.m2/repository
     - cd target
     - mkdir java
     - mv sausage-store-0.0.1-SNAPSHOT.jar java
-    - ls -la "$CI_PROJECT_DIR"
+    - ls -la "$CI_PROJECT_DIR"/backend/.m2/repository
   artifacts:
     paths:
       - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
