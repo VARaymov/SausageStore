@@ -5,17 +5,17 @@ stages:
 include:
   - template: Security/SAST.gitlab-ci.yml
 
-# sportbugs-sast:
-#   stage: test
-#   variables:
-#     COMPILE: "false"
-#     SAST_JAVA_VERSION: 16
-#     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
-#    script:
-#      - echo "Все ок"
-#   # artifacts:
-  #   paths:
-  #     - ${CI_PROJECT_DIR}/.m2/
+sportbugs-sast:
+  stage: test
+  variables:
+    COMPILE: "false"
+    SAST_JAVA_VERSION: 16
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+   script:
+     - echo "Все ок"
+  artifacts:
+    paths:
+      - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
 
 sonarqube-backend-sast:
   stage: test
@@ -66,9 +66,6 @@ build-backend-code-job:
     - cd target
     - mkdir java
     - mv sausage-store-0.0.1-SNAPSHOT.jar java
-    - echo '$CI_COMMIT_MESSAGE'
-    - echo "$CI_COMMIT_MESSAGE"
-    - echo $CI_COMMIT_MESSAGE
   artifacts:
     paths:
       - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
