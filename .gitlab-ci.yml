@@ -84,7 +84,7 @@ build-backend-code-job:
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
-    - mvn package -Dmaven.repo.local='$CI_PROJECT_DIR'/.m2/repository
+    - mvn package -Dmaven.repo.local="$CI_PROJECT_DIR"/.m2/repository
     - cd target
     - mkdir java
     - mv sausage-store-0.0.1-SNAPSHOT.jar java
