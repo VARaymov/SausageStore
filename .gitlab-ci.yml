@@ -56,20 +56,23 @@ sonarqube-frontend-sast:
 
 build-backend-code-job:
   stage: build
+  variables:
+    VERSION: 0.0.${CI_PIPELINE_ID}
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   only:
     changes:
       - backend/*
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
-    - mvn package -Dmaven.repo.local="$CI_PROJECT_DIR"/backend/.m2/repository
+    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
     - cd target
     - mkdir java
     - mv sausage-store-0.0.1-SNAPSHOT.jar java
   artifacts:
     paths:
-      - backend/target/java/sausage-store-0.0.1-SNAPSHOT.jar
-      - backend/.m2/repository
+      - backend/target/java/sausage-store-$[VERSION].jar
+      - ${CI_PROJECT_DIR}/.m2/repository
     reports:
       dotenv: backend.env
 
