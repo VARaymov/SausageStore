@@ -68,7 +68,7 @@ build-backend-code-job:
     - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
     - cd target
     - mkdir java
-    - mv sausage-store-0.0.1-SNAPSHOT.jar java
+    - mv sausage-store-${VERSION}.jar java
   artifacts:
     paths:
       - backend/target/java/sausage-store-${VERSION}.jar
