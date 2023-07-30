@@ -71,7 +71,7 @@ build-backend-code-job:
     - mv sausage-store-0.0.1-SNAPSHOT.jar java
   artifacts:
     paths:
-      - backend/target/java/sausage-store-$[VERSION].jar
+      - backend/target/java/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/.m2/repository
     reports:
       dotenv: backend.env
