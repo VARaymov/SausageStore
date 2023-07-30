@@ -64,7 +64,7 @@ build-backend-code-job:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
     - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
-    # - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dversion.application=${VERSION}
+    # - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dversion.project.version.application=${VERSION}
     #- mvn package  -Dversion.application=${VERSION}
     - cd target
     - ls -l
