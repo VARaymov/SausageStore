@@ -1,10 +1,10 @@
 stages:
   - build
-  - test
+  # - test
   - realase
-  - notify
-include:
-  - template: Security/SAST.gitlab-ci.yml
+  # - notify
+# include:
+#   - template: Security/SAST.gitlab-ci.yml
 
 # spotbugs-sast:
 #   stage: test
@@ -64,10 +64,7 @@ build-backend-code-job:
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
-    # - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy
     - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
-    # - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/.m2/repository -Dversion.project.version.application=${VERSION}
-    #- mvn package  -Dversion.application=${VERSION}
     - cd target
     - ls -l
     - mkdir java
@@ -90,7 +87,7 @@ upload-backend-release-job:
     - build-backend-code-job
   script:
     - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
 
 # build-frontend-code-job:
 #   stage: build
