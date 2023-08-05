@@ -1,7 +1,7 @@
 stages:
   - build
   - test
-  - realese
+  - realase
   - notify
 include:
   - template: Security/SAST.gitlab-ci.yml
@@ -80,16 +80,16 @@ build-backend-code-job:
       - ${CI_PROJECT_DIR}/.m2/repository
     reports:
       dotenv: backend.env
-      
 
 upload-backend-release-job:
-  stage: realese
+  stage: realase
   only:
     changes:
       - backend/**/*
   needs:
-    build-backend-code-job
+    - build-backend-code-job
   script:
+    - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s settings.xml -Dversion.application=${VERSION} -DskipTests deploy
 
 # build-frontend-code-job:
