@@ -6,6 +6,10 @@ stages:
 # include:
 #   - template: Security/SAST.gitlab-ci.yml
 
+variables:
+    VERSION: 1.0.${CI_PIPELINE_ID}
+    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+
 # spotbugs-sast:
 #   stage: test
 #   variables:
@@ -55,9 +59,9 @@ stages:
 
 build-backend-code-job:
   stage: build
-  variables:
-    VERSION: 1.0.${CI_PIPELINE_ID}
-    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+  # variables:
+  #   VERSION: 1.0.${CI_PIPELINE_ID}
+  #   MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   only:
     changes:
       - backend/*
@@ -82,9 +86,9 @@ build-backend-code-job:
 
 upload-backend-release-job:
   stage: realase
-  variables:
-    VERSION: 1.0.${CI_PIPELINE_ID}
-    MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+  # variables:
+  #   VERSION: 1.0.${CI_PIPELINE_ID}
+  #   MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   only:
     changes:
       - backend/**/*
