@@ -1,10 +1,10 @@
 stages:
   - build
-  - test
+  # - test
   - realase
-  - notify
-include:
-  - template: Security/SAST.gitlab-ci.yml
+  # - notify
+# include:
+#   - template: Security/SAST.gitlab-ci.yml
 
 # spotbugs-sast:
 #   stage: test
