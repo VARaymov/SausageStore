@@ -70,6 +70,8 @@ build-backend-code-job:
     - ls -l
     - mkdir java
     - mv sausage-store-${VERSION}.jar java
+    - cd java
+    - ls -l
   artifacts:
     paths:
       - backend/target/java/sausage-store-${VERSION}.jar
