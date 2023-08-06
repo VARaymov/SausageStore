@@ -12,7 +12,7 @@ build-backend-code-job:
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
     - cd backend
-    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.applica>
+    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
     - cd target
     - mkdir java
     - mv sausage-store-${VERSION}.jar java
@@ -37,7 +37,7 @@ upload-backend-release-job:
     - build-backend-code-job
   script:
     - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/back>
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
   cache:
     key: backend_cache
     paths:
