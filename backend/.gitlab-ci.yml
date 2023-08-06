@@ -4,7 +4,7 @@ stages:
 
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
-  MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+  MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/backend/.m2/repository
   JAVA_OPTS: -XX:MaxRAMPercentage=90 # для того, чтобы Maven не съел всю свободную оперативку
 
 build-backend-code-job:
@@ -22,7 +22,7 @@ build-backend-code-job:
   artifacts:
     paths:
       - backend/target/java/sausage-store-${VERSION}.jar
-      - ${CI_PROJECT_DIR}/.m2/repository
+      - ${CI_PROJECT_DIR}/backend/.m2/repository
       - ${CI_PROJECT_DIR}/backend/settings.xml
     reports:
       dotenv: backend.env
@@ -41,7 +41,7 @@ upload-backend-release-job:
   cache:
     key: backend_cache
     paths:
-      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимости бекенда
+      - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
   rules:
     - changes:
         - backend/**/*
