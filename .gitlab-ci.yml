@@ -135,21 +135,25 @@ upload-frontend-release-job:
   
 telegram-notification-backend:
   stage: notify
+  only:
+    changes:
+        - "backend/*"
   variables:
     ARTIFACT_URL:
-      $NEXUS_REPO_URL_BACKEND
+      ${NEXUS_REPO_URL_BACKEND}
   script:
-    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия frontend сосисочной — {$VERSION}. Скачать артефакт можно по ссылке — '${ARTIFACT_URL}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия frontend сосисочной — {$VERSION}. Скачать артефакт можно по ссылке — '${ARTIFACT_URL}"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - upload-backend-release-job
-  rules:
+  # rules:
     # - if: $CI_COMMIT_MESSAGE =~ "/send notification/"
-      changes:
-        paths:
-          - "backend/*"
+   
 
 telegram-notification-frontend:
   stage: notify
+  only:
+    changes:
+    - "frontend/*"
   variables:
     ARTIFACT_URL:
       "https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/jobs/'$FRONTEND_JOB'/artifacts/browse/frontend/dist/frontend"
@@ -157,8 +161,6 @@ telegram-notification-frontend:
     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Валерий собрал фронтенд. Артефакт можно посмотреть по ссылке '$ARTIFACT_URL'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - upload-frontend-release-job
-  rules:
+  # rules:
     # - if: $CI_COMMIT_MESSAGE =~ "/send notification/"
-      changes:
-        paths:
-          - "frontend/*"
+      
