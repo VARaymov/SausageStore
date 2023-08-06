@@ -16,10 +16,6 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
-    - pwd
-    - ls -la
-    - cd ..
-    - pwd && ls -la
   artifacts:
     paths:
       - frontend/dist/frontend
@@ -28,7 +24,7 @@ build-frontend-code-job:
   cache:
     key: frontend_cache
     paths:
-      - ${CI_PROJECT_DIR}/frontend/.npm/ # для хранения зависимостей сборки фронтенда
+      - ${CI_PROJECT_DIR}/frontend/dist/frontend 
 
 upload-frontend-release-job:
   stage: release
@@ -44,4 +40,4 @@ upload-frontend-release-job:
   cache:
     key: frontend_cache
     paths:
-      - ${CI_PROJECT_DIR}/frontend/.npm/ # для хранения зависимостей сборки фронтенда
+      - ${CI_PROJECT_DIR}/frontend/dist/frontend
