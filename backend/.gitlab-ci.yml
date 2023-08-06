@@ -23,7 +23,7 @@ build-backend-code-job:
     paths:
       - backend/target/java/sausage-store-${VERSION}.jar
       - ${CI_PROJECT_DIR}/backend/.m2/repository
-      - ${CI_PROJECT_DIR}/backend/settings.xml
+     # - ${CI_PROJECT_DIR}/backend/settings.xml
     reports:
       dotenv: backend.env
   cache:
