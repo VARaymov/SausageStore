@@ -24,7 +24,7 @@ build-frontend-code-job:
   cache:
     key: frontend_cache
     paths:
-      - .npm/ # для хранения зависимостей сборки фронтенда
+      - ${CI_PROJECT_DIR}/frontend/.npm/ # для хранения зависимостей сборки фронтенда
 
 upload-frontend-release-job:
   stage: release
@@ -40,4 +40,4 @@ upload-frontend-release-job:
   cache:
     key: frontend_cache
     paths:
-      - .npm/ # для хранения зависимостей сборки фронтенда
+      - ${CI_PROJECT_DIR}/frontend/.npm/ # для хранения зависимостей сборки фронтенда
