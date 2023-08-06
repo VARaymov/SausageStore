@@ -18,6 +18,8 @@ build-frontend-code-job:
     - npm run build
     - pwd
     - ls -la
+    - cd ..
+    - pwd && ls -la
   artifacts:
     paths:
       - frontend/dist/frontend
