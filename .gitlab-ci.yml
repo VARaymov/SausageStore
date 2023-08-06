@@ -109,6 +109,7 @@ build-frontend-code-job:
     - cd frontend
     - npm install
     - npm run build
+    - ls -la
   artifacts:
     paths:
       - frontend/dist/frontend
@@ -123,7 +124,8 @@ upload-frontend-release:
   needs:
     - build-frontend-code-job
   script:
-    - echo hello
+    - tar czvf sausage-store-${VERSION}.tar.gz {CI_PROJECT_DIR}/frontend/dist/frontend
+    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" -upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front-sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
   
 
 # telegram-notification-backend:
