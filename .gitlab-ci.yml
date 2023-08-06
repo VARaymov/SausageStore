@@ -1,7 +1,7 @@
 stages:
   - build
   # - test
-  - realase
+  - release
   # - notify
 # include:
 #   - template: Security/SAST.gitlab-ci.yml
@@ -9,6 +9,11 @@ stages:
 variables:
     VERSION: 1.0.${CI_PIPELINE_ID}
     MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+
+cache:
+    paths:
+      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимости бекенда
+      - .npm/ # для хранения зависимостей сборки фронтенда
 
 # spotbugs-sast:
 #   stage: test
@@ -59,9 +64,6 @@ variables:
 
 build-backend-code-job:
   stage: build
-  # variables:
-  #   VERSION: 1.0.${CI_PIPELINE_ID}
-  #   MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
   only:
     changes:
       - backend/*
@@ -83,12 +85,10 @@ build-backend-code-job:
       - ${CI_PROJECT_DIR}/backend/settings.xml
     reports:
       dotenv: backend.env
+  
 
 upload-backend-release-job:
-  stage: realase
-  # variables:
-  #   VERSION: 1.0.${CI_PIPELINE_ID}
-  #   MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/.m2/repository
+  stage: release
   only:
     changes:
       - backend/**/*
@@ -98,22 +98,33 @@ upload-backend-release-job:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
 
-# build-frontend-code-job:
-#   stage: build
-#   only:
-#     changes:
-#       - frontend/*
-#   before_script:
-#     - echo "FRONTEND_JOB=$CI_JOB_ID" >> frontend.env
-#   script:
-#     - cd frontend
-#     - npm install
-#     - npm run build
-#   artifacts:
-#     paths:
-#       - frontend/dist/frontend
-#     reports:
-#       dotenv: frontend.env
+build-frontend-code-job:
+  stage: build
+  only:
+    changes:
+      - frontend/*
+  before_script:
+    - echo "FRONTEND_JOB=$CI_JOB_ID" >> frontend.env
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/frontend
+    reports:
+      dotenv: frontend.env
+
+upload-frontend-release:
+  stage: release
+  only:
+    changes:
+      - frontend/*
+  needs:
+    - build-frontend-code-job
+  script:
+    - echo hello
+  
 
 # telegram-notification-backend:
 #   stage: notify
