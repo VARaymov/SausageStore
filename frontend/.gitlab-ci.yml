@@ -1,0 +1,43 @@
+variables:
+	VERSION: 1.0.${CI_PIPELINE_ID}
+
+stages:
+	- build
+	- release
+
+build-frontend-code-job:
+  stage: build
+  only:
+    changes:
+      - frontend/**/*
+  before_script:
+    - echo "FRONTEND_JOB=$CI_JOB_ID" >> frontend.env
+  script:
+    - cd frontend
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/frontend
+    reports:
+      dotenv: frontend.env
+  cache:
+    key: frontend_cache
+    paths:
+      - .npm/ # для хранения зависимостей сборки фронтенда
+
+upload-frontend-release-job:
+  stage: release
+  only:
+    changes:
+      - frontend/**/*
+  needs:
+    - build-frontend-code-job
+  script:
+    - cd frontend
+    - tar czvf sausage-store-${VERSION}.tar.gz ${CI_PROJECT_DIR}/frontend/dist/frontend
+    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" --upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
+  cache:
+    key: frontend_cache
+    paths:
+      - .npm/ # для хранения зависимостей сборки фронтенда
