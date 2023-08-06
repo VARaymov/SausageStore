@@ -57,45 +57,6 @@ sonarqube-frontend-sast:
   needs:
     - build-frontend-code-job
 
-build-backend-code-job:
-  stage: build
-  only:
-    changes:
-      - backend/*
-  script:
-    - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
-    - cd backend
-    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
-    - cd target
-    - mkdir java
-    - mv sausage-store-${VERSION}.jar java
-  artifacts:
-    paths:
-      - backend/target/java/sausage-store-${VERSION}.jar
-      - ${CI_PROJECT_DIR}/.m2/repository
-      - ${CI_PROJECT_DIR}/backend/settings.xml
-    reports:
-      dotenv: backend.env
-  cache:
-    key: backend_cache
-    paths:
-      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимости бекенда
-
-upload-backend-release-job:
-  stage: release
-  only:
-    changes:
-      - backend/**/*
-  needs:
-    - build-backend-code-job
-  script:
-    - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
-  cache:
-    key: backend_cache
-    paths:
-      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимости бекенда
-
 build-frontend-code-job:
   stage: build
   only:
