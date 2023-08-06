@@ -3,7 +3,7 @@ stages:
   # - test
   # - release
   - module-pipelines
-  # - notify
+  - notify
 # include:
 #   - template: Security/SAST.gitlab-ci.yml
 
