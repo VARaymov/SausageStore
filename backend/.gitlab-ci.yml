@@ -29,7 +29,7 @@ build-backend-code-job:
   cache:
     key: backend_cache
     paths:
-      - ${CI_PROJECT_DIR}/.m2/repository # для хранения зависимости бекенда
+      - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
 
 upload-backend-release-job:
   stage: release
