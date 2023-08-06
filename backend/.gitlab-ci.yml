@@ -37,7 +37,7 @@ upload-backend-release-job:
     - build-backend-code-job
   script:
     - cd backend
-    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
   cache:
     key: backend_cache
     paths:
