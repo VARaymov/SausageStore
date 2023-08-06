@@ -140,7 +140,8 @@ upload-frontend-release-job:
     - pwd
     - ls -la
     - tar czvf sausage-store-${VERSION}.tar.gz ${CI_PROJECT_DIR}/frontend/dist/frontend
-    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" -upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
+    # - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" -upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
+    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" -upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/
   cache:
     key: frontend_cache
     paths:
