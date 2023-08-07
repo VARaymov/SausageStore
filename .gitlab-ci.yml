@@ -86,6 +86,7 @@ telegram-notification-backend:
     # VERSION:
     #   grep -Po 'VERSION=\K.*' ${CI_PROJECT_DIR}/backend/version.txt
   script:
+    - pwd && ls -la
     - ls -la ${CI_PROJECT_DIR}/backend/
     - cat ${CI_PROJECT_DIR}/backend/version.txt
     - VERSION=$(grep -Po 'VERSION=\K.*' ${CI_PROJECT_DIR}/backend/version.txt)
