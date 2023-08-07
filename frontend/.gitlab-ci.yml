@@ -41,3 +41,18 @@ upload-frontend-release-job:
     key: frontend_cache
     paths:
       - ${CI_PROJECT_DIR}/frontend/dist/frontend
+
+telegram-notification-frontend:
+  stage: notify
+  only:
+    changes:
+    - "frontend/*"
+  variables:
+    ARTIFACT_URL:
+      ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
+  script: 
+    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия frontend сосисочной - '${VERSION}'. Скачать артефакт можно по ссылке - '${ARTIFACT_URL}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+  needs:
+    - frontend-job
+  # rules:
+    # - if: $CI_COMMIT_MESSAGE =~ "/send notification/"
