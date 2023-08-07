@@ -83,9 +83,10 @@ telegram-notification-backend:
   variables:
     ARTIFACT_URL:
       ${NEXUS_REPO_URL_BACKEND}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar
-    VERSION:
-      grep -Po 'VERSION=\K.*' ${CI_PROJECT_DIR}/backend/version.txt
+    # VERSION:
+    #   grep -Po 'VERSION=\K.*' ${CI_PROJECT_DIR}/backend/version.txt
   script:
+    - $VERSION=grep -Po 'VERSION=\K.*' ${CI_PROJECT_DIR}/backend/version.txt
     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия backend сосисочной — '${VERSION}'. Скачать артефакт можно по ссылке — '${ARTIFACT_URL}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
     - backend-job
