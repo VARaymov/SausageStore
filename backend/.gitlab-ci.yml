@@ -48,7 +48,6 @@ upload-backend-release-job:
     - changes:
         - backend/**/*
 
-
 telegram-notification-backend:
   stage: notify
   only:
