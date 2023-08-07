@@ -11,10 +11,8 @@ build-backend-code-job:
   stage: build
   script:
     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
-    - echo "VERSION=${VERSION}" >> version.txt
-    - ls -la
     - cd backend
-    - ls -la
+    - echo "VERSION=${VERSION}" >> version.txt
     - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
     - cd target
     - mkdir java
