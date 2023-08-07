@@ -1,7 +1,8 @@
 stages:
   - build
   - release
-  - notify
+  # - notify
+  - deploy
 variables:
   VERSION: 1.0.${CI_PIPELINE_ID}
   MAVEN_REPO_PATH: ${CI_PROJECT_DIR}/backend/.m2/repository
@@ -48,17 +49,32 @@ upload-backend-release-job:
     - changes:
         - backend/**/*
 
-telegram-notification-backend:
-  stage: notify
-  only:
-    changes:
-        - "backend/*"
-  variables:
-    ARTIFACT_URL:
-      ${NEXUS_REPO_URL_BACKEND}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar
+deploy-backend-job:
+  stage:
+    - deploy
+  before_script:
+    # устанавилваем ssg-agent для удобства аутентификации по ssh
+    - 'command -v ssh-agent >dev/null || (apt-ger update -y && apt-get install openssh-client -y)'
+    - eval $(ssh-agent -s)
+    # сохраняем сгенерированный ранее приватный ключ для раннера
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 600 ~/.ssh
   script:
-    - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия backend сосисочной — '${VERSION}'. Скачать артефакт можно по ссылке — '${ARTIFACT_URL}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
-  needs:
-    - upload-backend-release-job
-  # rules:
-    # - if: $CI_COMMIT_MESSAGE =~ "/send notification/"
+    # выполняем простую комкнду для проверки
+    - ssh ${DEV_USER}@${DEV_HOST} "id"
+
+# telegram-notification-backend:
+#   stage: notify
+#   only:
+#     changes:
+#         - "backend/*"
+#   variables:
+#     ARTIFACT_URL:
+#       ${NEXUS_REPO_URL_BACKEND}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar
+#   script:
+#     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия backend сосисочной — '${VERSION}'. Скачать артефакт можно по ссылке — '${ARTIFACT_URL}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
+#   needs:
+#     - upload-backend-release-job
+#   # rules:
+#     # - if: $CI_COMMIT_MESSAGE =~ "/send notification/"
