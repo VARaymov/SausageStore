@@ -52,8 +52,7 @@ upload-backend-release-job:
         - backend/**/*
 
 deploy-backend-job:
-  stage:
-    - deploy
+  stage: deploy
   before_script:
     # устанавилваем ssg-agent для удобства аутентификации по ssh
     - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
