@@ -54,7 +54,7 @@ deploy-backend-job:
     - deploy
   before_script:
     # устанавилваем ssg-agent для удобства аутентификации по ssh
-    - 'command -v ssh-agent >dev/null || (apt-ger update -y && apt-get install openssh-client -y)'
+    - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
     # сохраняем сгенерированный ранее приватный ключ для раннера
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
