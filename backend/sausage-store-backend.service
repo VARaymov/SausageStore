@@ -15,7 +15,7 @@ Restart=always
 ExecStart=/usr/bin/java \
 -Dmyserver.basePath='/home/jarservice/' \
 -Dmyserver.bindAddr='127.0.0.1' \
--Dmyserver.bindPort='8080' \
+-Dmyserver.bindPort='8090' \
 -Dmyserver.hostName='Sausage-store' \
 -jar '/home/jarservice/sausage-store.jar'
 SuccessExitStatus=143
