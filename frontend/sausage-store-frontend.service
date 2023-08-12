@@ -3,7 +3,7 @@ Description=Frontend service for sausage store
 
 [Service]
 #ExecStartPre=/usr/sbin/iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8090
-ExecStart=http-server /home/front-user/dist/frontend -p 8090 --proxy http://localhost:8080
+ExecStart=http-server /home/front-user/sausage-store -p 8090 --proxy http://localhost:8080
 Restart=always
 User=front-user
 StardardOutput=/logs/out-front.log
