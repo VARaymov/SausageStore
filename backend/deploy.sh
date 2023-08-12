@@ -3,7 +3,7 @@
 set -xe
 #Перезаливаем дескриптор сервиса на ВМ для деплоя
 sudo cp -rf sausage-store-backend.service /etc/systemd/system/sausage-store-backend.service
-sudo rm -f /home/jarservice/sausage-store.jar||true
+sudo rm -f /home/student/sausage-store.jar||true
 #Переносим в нужную папку
 #скачиваем артефакт
 curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-backend-${VERSION}.jar ${NEXUS_REPO_URL_BACKEND}/com/yandex/practicum/devops/sausage-store/${VERSION}/sausage-store-${VERSION}.jar
