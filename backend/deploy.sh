@@ -11,4 +11,5 @@ pwd
 ls -la
 sudo cp ./sausage-store-backend-${VERSION}.jar /home/jarservice/sausage-store.jar||true #"<...>||true" говорит, если команда обвалится - продолжай
 #Перезапускаем сервис сосисочной
+sudo systemctl daemon-reload sausage-store-backend.service
 sudo systemctl restart sausage-store-backend.service
