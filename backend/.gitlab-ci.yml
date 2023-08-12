@@ -54,7 +54,7 @@ upload-backend-release-job:
 
 deploy-backend-job:
   stage: deploy
-    needs:
+  needs:
     - upload-backend-release-job
   before_script:
     # устанавилваем ssg-agent для удобства аутентификации по ssh
