@@ -1,6 +1,6 @@
 stages:
-  # - build
-  # - release
+  - build
+  - release
   # - notify
   - deploy
 variables:
@@ -11,49 +11,51 @@ variables:
   DEV_HOST: std-019-02.praktikum-services.tech
   JAVA_OPTS: -XX:MaxRAMPercentage=90 # для того, чтобы Maven не съел всю свободную оперативку
 
-# build-backend-code-job:
-#   stage: build
-#   script:
-#     - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
-#     - cd backend
-#     - echo "VERSION=${VERSION}" >> version.txt
-#     - pwd && ls -la
-#     - cat version.txt
-#     - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
-#     - cd target
-#     - mkdir java
-#     - mv sausage-store-${VERSION}.jar java
-#   rules:
-#     - changes:
-#         - backend/**/*
-#   artifacts:
-#     paths:
-#       - backend/target/java/sausage-store-${VERSION}.jar
-#       - ${CI_PROJECT_DIR}/backend/version.txt
-#     reports:
-#       dotenv: backend.env
-#   cache:
-#     key: backend_cache
-#     paths:
-#       - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
+build-backend-code-job:
+  stage: build
+  script:
+    - echo "BACKEND_JOB=$CI_JOB_ID" >> backend.env
+    - cd backend
+    - echo "VERSION=${VERSION}" >> version.txt
+    - pwd && ls -la
+    - cat version.txt
+    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION}
+    - cd target
+    - mkdir java
+    - mv sausage-store-${VERSION}.jar java
+  rules:
+    - changes:
+        - backend/**/*
+  artifacts:
+    paths:
+      - backend/target/java/sausage-store-${VERSION}.jar
+      - ${CI_PROJECT_DIR}/backend/version.txt
+    reports:
+      dotenv: backend.env
+  cache:
+    key: backend_cache
+    paths:
+      - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
 
-# upload-backend-release-job:
-#   stage: release
-#   needs:
-#     - build-backend-code-job
-#   script:
-#     - cd backend
-#     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
-#   cache:
-#     key: backend_cache
-#     paths:
-#       - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
-#   rules:
-#     - changes:
-#         - backend/**/*
+upload-backend-release-job:
+  stage: release
+  needs:
+    - build-backend-code-job
+  script:
+    - cd backend
+    - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
+  cache:
+    key: backend_cache
+    paths:
+      - ${CI_PROJECT_DIR}/backend/.m2/repository # для хранения зависимости бекенда
+  rules:
+    - changes:
+        - backend/**/*
 
 deploy-backend-job:
   stage: deploy
+    needs:
+    - upload-backend-release-job
   before_script:
     # устанавилваем ssg-agent для удобства аутентификации по ssh
     - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
