@@ -1,0 +1,24 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Sausage-store backend service
+After=network.target
+Documentation=https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/bl>
+
+[Service]
+User=jarservice
+Environment=REPORT_PATH=/log/reports
+Environment=LOG_PATH=/log
+StandardOutput=file:/log/out.log
+Restart=always
+ExecStart=/usr/bin/java \
+-Dmyserver.basePath='/home/jarservice/' \
+-Dmyserver.bindAddr='127.0.0.1' \
+-Dmyserver.bindPort='8080' \
+-Dmyserver.hostName='Sausage-store' \
+-jar '/home/jarservice/sausage-store.jar'
+SuccessExitStatus=143
+
+
+
