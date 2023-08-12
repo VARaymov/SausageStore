@@ -2,7 +2,7 @@
 set -xe
 sudo cp -rf sausage-store-frontend.service /etc/systemd/system/sausage-store-frontend.service
 sudo rm -f /home/student/sausage-store.jar||true
-curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend-${VERSION}.jar ${NEXUS_REPO_URL_BACKEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
+curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend-${VERSION}.tar.gz ${NEXUS_REPO_URL_BACKEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
 ls -la
 tar -xvf sausage-store-frontend-${VERSION}.tar.gz
 ls -la
