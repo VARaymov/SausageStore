@@ -62,9 +62,17 @@ deploy-backend-job:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 600 ~/.ssh
+    - SSH_KNOWN_HOSTS=$(ssh-keyscan $DEV_HOST)
+    - echo "$SSH_PUBLIC_KEY" >> ~/.ssh/id_rsa.pub
+    - scp ~/.ssh/id_rsa.pub ${DEV_USER}@${DEV_HOST}:~/.ssh/id_rsa.pub
+    - ssh ${DEV_USER}@${DEV_HOST} "cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && rm ~/.ssh/id_rsa.pub"
+    - echo "$SSH_KNOWN_HOSTS" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     # выполняем простую комкнду для проверки
     - ssh ${DEV_USER}@${DEV_HOST} "id"
+
+    
 
 # telegram-notification-backend:
 #   stage: notify
