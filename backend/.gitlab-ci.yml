@@ -113,9 +113,6 @@ deploy-backend-job:
 # Отправка сообщения в Telegram с помощью curl запроса, если в сообщении коммита есть фраза "send notification"
 telegram-notification-backend:
   stage: notify
-  only:
-    changes:
-        - "backend/*"
   script:
     - curl -X POST -H "Content-type:application/json" --data '{"chat_id":"-1001634310929", "text":"Вышла новая версия backend сосисочной — '${VERSION}'. Скачать артефакт можно по ссылке — '${TEXT}'"}' "https://api.telegram.org/bot5933756043:AAE8JLL5KIzgrNBeTP5e-1bkbJy4YRoeGjs/sendMessage"
   needs:
