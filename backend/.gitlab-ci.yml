@@ -56,6 +56,9 @@ deploy-backend-job:
   stage: deploy
   needs:
     - upload-backend-release-job
+  environment:
+    name: staging
+    url: http://std-019-02.praktikum-services.tech:8090
   before_script:
     # устанавилваем ssg-agent для удобства аутентификации по ssh
     - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'

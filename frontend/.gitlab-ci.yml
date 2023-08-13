@@ -51,6 +51,9 @@ deploy-frontend-job:
   stage: deploy
   needs:
     - upload-frontend-release-job
+  environment:
+    name: staging
+    url: http://std-019-02.praktikum-services.tech:8090
   before_script:
     - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
     - eval $(ssh-agent -s)
