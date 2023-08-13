@@ -1,0 +1,17 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=Sausage-store backend service
+After=network.target
+Documentation=https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/bl>
+
+[Service]
+User=jarservice
+Environment=REPORT_PATH=/logs/out.log
+Environment=LOG_PATH=/logs
+#StandardOutput=file:/log/out.log
+Restart=always
+ExecStart=/usr/bin/java -jar /home/jarservice/sausage-store.jar
+
+
