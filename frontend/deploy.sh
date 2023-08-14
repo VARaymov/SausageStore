@@ -7,6 +7,7 @@ curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-frontend-${VERSIO
 tar -xvf sausage-store-frontend-${VERSION}.tar.gz -C .
 sudo cp -r ./builds/std-019-002/sausage-store/frontend/dist/frontend /home/front-user/sausage-store/||true
 sudo systemctl daemon-reload 
+sudo systemctl enable sausage-store-frontend.service
 sudo systemctl restart sausage-store-frontend.service
 rm -rf builds||true
 sudo rm -f /home/student/sausage-store-frontend-${VERSION}.tar.gz||true
