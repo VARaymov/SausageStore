@@ -13,9 +13,9 @@ variables:
   TEXT: ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
 
 # Используем механизм кеширования, чтобы сохранять между задачами собранный фронтенд
-cashe:
-  paths:
-    - frontend/dist
+# cashe:
+#   paths:
+#     - frontend/dist
 
 build-frontend-code-job:
   stage: build
