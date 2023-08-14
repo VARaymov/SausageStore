@@ -109,6 +109,7 @@ deploy-backend-job:
     url: http://std-019-02.praktikum-services.tech:8090
     auto_stop_in: 1h
   rules: # Специальное условие, требующие ручного нажатия для установки на виртуальную машину нового обновления
+    - when: manual
     
 # Отправка сообщения в Telegram с помощью curl запроса, если в сообщении коммита есть фраза "send notification"
 telegram-notification-backend:
