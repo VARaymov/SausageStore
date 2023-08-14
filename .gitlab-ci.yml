@@ -61,46 +61,7 @@ gitlab-sast:
       - template: Security/SAST.gitlab-ci.yml
 
 
-# Архивируем скомпилированные файлы и загружаем архив с помощью curl запроса на Nexus
-upload-frontend-release-job:
-  stage: release
-  only:
-    changes:
-      - frontend/**/*
-  needs:
-    - build-frontend-code-job
-  script:
-    - cd frontend
-    - tar czvf sausage-store-${VERSION}.tar.gz ${CI_PROJECT_DIR}/frontend/dist/frontend
-    - curl -v -u "${NEXUS_REPO_USER}:${NEXUS_REPO_PASS}" --upload-file sausage-store-${VERSION}.tar.gz ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
-  cache:
-    key: frontend_cache
-    paths:
-      - ${CI_PROJECT_DIR}/frontend/dist/frontend
 
-# Деплой нового фронтенда на виртуальную машину. В блоке before_script запускается предварительно настройка подключения ssh к виртуальной машине, в блоке script копируем service и скрипт для деплоя приложения. И передаем при его запуске необходимые переменные
-deploy-frontend-job:
-  stage: deploy
-  needs:
-    - upload-frontend-release-job
-  before_script:
-    - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 600 ~/.ssh
-    - SSH_KNOWN_HOSTS=$(ssh-keyscan $DEV_HOST)
-    - echo ${SSH_KNOWN_HOSTS} >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts    
-  script:
-    - scp ./frontend/sausage-store-frontend.service ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/sausage-store-frontend.service
-    - ssh ${DEV_USER}@${DEV_HOST} "export "CURRENT_VERSION=${VERSION}"; export "VERSION=${VERSION}"; export "DEV_HOST=${DEV_HOST}";export "NEXUS_REPO_URL_FRONTEND=${NEXUS_REPO_URL_FRONTEND}"; export "NEXUS_REPO_USER=${NEXUS_REPO_USER}"; export "NEXUS_REPO_PASS=${NEXUS_REPO_PASS}";setsid /bin/bash -s " < ./frontend/deploy.sh
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: http://std-019-02.praktikum-services.tech:8090
-    auto_stop_in: 1h
-  rules:
-    - when: manual
 
 telegram-notification-frontend:
   stage: notify
