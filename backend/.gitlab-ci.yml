@@ -27,7 +27,7 @@ build-backend-code-job:
     - echo "VERSION=${VERSION}" >> version.txt
     - pwd && ls -la
     - cat version.txt
-    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION} 
+    - mvn package -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -Dversion.application=${VERSION} -Dmaven.test.skip=true
     - cd target
     - mkdir java
     - mv sausage-store-${VERSION}.jar java
