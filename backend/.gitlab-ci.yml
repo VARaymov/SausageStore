@@ -72,9 +72,9 @@ build-backend-code-job:
 # Используя механизм maven, загружаем собранный jar в Nexus, указываем в команде кастомный settings.xml, в котором прописан url нашего Nexus
 upload-backend-release-job:
   stage: release
-  needs:
-    - sonarqube-backend-sast
-    - gitlab-sast
+  #needs:
+ #   - sonarqube-backend-sast
+  #  - gitlab-sast
   script:
     - cd backend
     - mvn -Dmaven.repo.local=${CI_PROJECT_DIR}/backend/.m2/repository -s ${CI_PROJECT_DIR}/backend/settings.xml -Dversion.application=${VERSION} -DskipTests deploy
