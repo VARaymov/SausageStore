@@ -18,4 +18,5 @@ ExecStart=/usr/bin/java -jar /home/jarservice/sausage-store.jar \
 --spring.datasource.password=$PSQL_PASSWORD \
 --spring.flyway.baselineOnMigrate='true'
 
-
+# MongoDB
+--spring.data.mongodb.uri=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:27018/${MONGO_DATABASE}?tls=true 
