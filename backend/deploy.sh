@@ -14,8 +14,6 @@ mkdir -p ~/.mongodb && \
 wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
      --output-document ~/.mongodb/root.crt && \
 chmod 0644 ~/.mongodb/root.crt
-env
-env | grep PSQL
 sudo systemctl daemon-reload 
 sudo systemctl enable sausage-store-backend
 sudo systemctl restart sausage-store-backend.service
