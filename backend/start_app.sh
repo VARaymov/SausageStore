@@ -11,4 +11,5 @@ echo "$PSQL_HOST $PSQL_PORT $PSQL_DBNAME $PSQL_USER $PSQL_PASSWORD" > ~/12345.tx
   --spring.datasource.url=jdbc:postgresql://$PSQL_HOST:$PSQL_PORT/$PSQL_DBNAME \
   --spring.datasource.username=$PSQL_USER \
   --spring.datasource.password=$PSQL_PASSWORD \
-  --spring.flyway.baselineOnMigrate='yes'
+  --spring.flyway.baselineOnMigrate='yes' \
+  --spring.data.mongodb.uri=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:27018/${MONGO_DATABASE}?tls=true
