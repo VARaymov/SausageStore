@@ -12,7 +12,7 @@ Environment=REPORT_PATH=/logs/out.log
 Environment=LOG_PATH=/logs
 EnvironmentFile=/home/student/variables.env
 #StandardOutput=file:/log/out.log
-Restart=always
+Restart=never
 ExecStartPre=/bin/bash -c 'echo $PSQL_HOST $PSQL_PORT $PSQL_DBNAME'
 ExecStart=/usr/bin/java -jar /home/jarservice/sausage-store.jar 
 --spring.datasource.url=jdbc:postgresql://$PSQL_HOST:$PSQL_PORT/$PSQL_DBNAME 
