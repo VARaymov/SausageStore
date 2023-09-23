@@ -10,6 +10,7 @@ Documentation=https://gitlab.praktikum-services.ru/std-019-002/sausage-store/-/b
 User=jarservice
 Environment=REPORT_PATH=/logs/out.log
 Environment=LOG_PATH=/logs
+EnvironmentFile=/home/student/variables.env
 #StandardOutput=file:/log/out.log
 Restart=always
 ExecStart=/usr/bin/java -jar /home/jarservice/sausage-store.jar \
