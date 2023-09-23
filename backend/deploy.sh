@@ -10,6 +10,7 @@ curl -u ${NEXUS_REPO_USER}:${NEXUS_REPO_PASS} -o sausage-store-backend-${VERSION
 sudo cp ./sausage-store-backend-${VERSION}.jar /home/jarservice/sausage-store.jar||true #"<...>||true" говорит, если команда обвалится - продолжай
 #Перезапускаем сервис сосисочной
 source /home/student/variables.env
+chmod +x /home/student/start_app.sh
 mkdir -p ~/.mongodb && \
 wget "https://storage.yandexcloud.net/cloud-certs/CA.pem" \
      --output-document ~/.mongodb/root.crt && \
