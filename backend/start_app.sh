@@ -7,9 +7,9 @@ source /home/student/variables.env
 echo "$PSQL_HOST $PSQL_PORT $PSQL_DBNAME $PSQL_USER $PSQL_PASSWORD" > ~/12345.txt
 
 # Запуск Java-приложения
-/usr/bin/java -jar /home/jarservice/sausage-store.jar \
+/usr/bin/java -Djavax.net.ssl.trustStore=/home/student/YATrustStore -Djavax.net.ssl.trustStorePassword=superpass -jar /home jarservice/sausage-store.jar \
   --spring.datasource.url=jdbc:postgresql://$PSQL_HOST:$PSQL_PORT/$PSQL_DBNAME \
   --spring.datasource.username=$PSQL_USER \
   --spring.datasource.password=$PSQL_PASSWORD \
   --spring.flyway.baselineOnMigrate='yes' \
-  --spring.data.mongodb.uri=mongodb://$MONGO_USER:$MONGO_PASSWORD@$MONGO_HOST:27018/$MONGO_DATABASE}tls=true
+  --spring.data.mongodb.uri=mongodb://$MONGO_USER:$MONGO_PASSWORD@$MONGO_HOST:27018/$MONGO_DATABASE?tls=true
