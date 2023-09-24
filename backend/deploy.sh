@@ -1,6 +1,6 @@
 #! /bin/bash
 #чтобы скрипт завершался, если есть ошибки. Если свалится одна из команд, рухнет и весь скрипт
-set -xe
+#set -xe
 #Перезаливаем дескриптор сервиса на ВМ для деплоя
 sudo cp -rf sausage-store-backend.service /etc/systemd/system/sausage-store-backend.service
 sudo rm -f /home/student/sausage-store-backend-${VERSION}.jar||true
