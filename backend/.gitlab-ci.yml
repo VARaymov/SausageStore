@@ -88,7 +88,7 @@ deploy-backend:
   #  - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   #    when: manual
   #  - if: '$CI_COMMIT_BRANCH == "master"'
-      when: manual
+#     when: manual
   before_script:
     - apk add openssh-client bash
     - eval $(ssh-agent -s)
@@ -105,4 +105,6 @@ deploy-backend:
        export "SPRING_DATASOURCE_PASSWORD=${PSQL_PASSWORD}";
        export "SPRING_DATA_MONGODB_URI=${MONGO_DATA}
        export "CI_REGISTRY_IMAGE=${CI_REGISTRY_IMAGE}";
-      /bin/bash -s " < ./backend/backend_deploy.sh 
+      /bin/bash -s " < ./backend/backend_deploy.sh
+  rules: # Специальное условие, требующие ручного нажатия для установки на виртуальную машину нового обновления
+    - when: manual
