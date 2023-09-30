@@ -10,6 +10,7 @@ docker network create -d bridge sausage_network || true
 docker pull $CI_REGISTRY_IMAGE/sausage-backend:latest
 docker stop backend || true
 docker rm backend || true
+docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 set -e
 docker run -d --name backend \
     --network=sausage_network \
