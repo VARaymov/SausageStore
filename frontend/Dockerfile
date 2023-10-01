@@ -1,9 +1,9 @@
 FROM node:16
 # Create app directory
 WORKDIR /usr/src/app
-COPY --chown=frontenduser:frontenduser . .
 RUN addgroup --system frontenduser \
     && adduser -S -s /bin/false -G frontenduser frontenduser -D -H 
+COPY --chown=frontenduser:frontenduser . .
 RUN npm install
 RUN npm install -g http-server
 RUN npm run build
