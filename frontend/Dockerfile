@@ -10,4 +10,4 @@ RUN npm run build
 RUN cat /etc/passwd
 EXPOSE 80
 USER frontenduser
-ENTRYPOINT ["http-server", "dist/frontend/", "-p", "80", "--proxy", "http://sausage-backend:8080"]
+ENTRYPOINT ["http-server", "dist/frontend/", "-p", "80", "--proxy", "http://backend:8080"]
