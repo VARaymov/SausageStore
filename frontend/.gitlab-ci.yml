@@ -61,7 +61,6 @@ build-frontend:
 #    include:
 #      - template: Security/SAST.gitlab-ci.yml
 
-
 upload-frontend-latest:
   variables:
     GIT_STRATEGY: none
@@ -98,39 +97,10 @@ deploy-frontend:
     - echo $CI_REGISTRY_USER $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - ssh ${DEV_USER}@${DEV_HOST}
       "export "VERSION=${VERSION}";
-       export "SPRING_DATASOURCE_URL=${PSQL_DATASOURCE}";
-       export "SPRING_DATASOURCE_USERNAME=${PSQL_USER}";
-       export "SPRING_DATASOURCE_PASSWORD=${PSQL_PASSWORD}";
-       export "SPRING_DATA_MONGODB_URI=${MONGO_DATA}";
        export "CI_REGISTRY_IMAGE=${CI_REGISTRY_IMAGE}";
        export "CI_REGISTRY_PASSWORD=${CI_REGISTRY_PASSWORD}";
        export "CI_REGISTRY_USER=${CI_REGISTRY_USER}";
        export "CI_REGISTRY=${CI_REGISTRY}";
-      /bin/bash -s " < ./backend/backend_deploy.sh
+      /bin/bash -s " < ./frontend/frontend_deploy.sh
   rules: # Специальное условие, требующие ручного нажатия для установки на виртуальную машину нового обновления
-    - when: manual
-
-
-# Деплой нового фронтенда на виртуальную машину. В блоке before_script запускается предварительно настройка подключения ssh к виртуальной машине, в блоке script копируем service и скрипт для деплоя приложения. И передаем при его запуске необходимые переменные
-deploy-frontend-job:
-  stage: deploy
-  needs:
-    - upload-frontend-release-job
-  before_script:
-    - 'command -v ssh-agent >dev/null || (apt-get update -y && apt-get install openssh-client -y)'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 600 ~/.ssh
-    - SSH_KNOWN_HOSTS=$(ssh-keyscan $DEV_HOST)
-    - echo ${SSH_KNOWN_HOSTS} >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts    
-  script:
-    - scp ./frontend/sausage-store-frontend.service ${DEV_USER}@${DEV_HOST}:/home/${DEV_USER}/sausage-store-frontend.service
-    - ssh ${DEV_USER}@${DEV_HOST} "export "CURRENT_VERSION=${VERSION}"; export "VERSION=${VERSION}"; export "DEV_HOST=${DEV_HOST}";export "NEXUS_REPO_URL_FRONTEND=${NEXUS_REPO_URL_FRONTEND}"; export "NEXUS_REPO_USER=${NEXUS_REPO_USER}"; export "NEXUS_REPO_PASS=${NEXUS_REPO_PASS}";setsid /bin/bash -s " < ./frontend/deploy.sh
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: http://std-019-02.praktikum-services.tech:8090
-    auto_stop_in: 1h
-  rules:
     - when: manual
