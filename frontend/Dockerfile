@@ -2,7 +2,7 @@ FROM node:16
 # Create app directory
 WORKDIR /usr/src/app
 RUN addgroup --system frontenduser
-RUN adduser --system --shell /bin/false --group frontenduser frontenduser --disable-password -H 
+RUN adduser --system --shell /bin/false --group frontenduser frontenduser --disabled-password -H 
 RUN npm install
 RUN npm install -g http-server
 RUN npm run build
