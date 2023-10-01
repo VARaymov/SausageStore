@@ -3,7 +3,7 @@ FROM node:16
 WORKDIR /usr/src/app
 COPY . .
 RUN addgroup --system frontenduser
-RUN adduser --system --disabled-password --home /home/frontenduser --shell /bin/false --group frontenduser frontenduser 
+RUN adduser --system --disabled-password --home /home/frontenduser --shell /bin/false --group frontenduser 
 RUN npm install
 RUN npm install -g http-server
 RUN npm run build
