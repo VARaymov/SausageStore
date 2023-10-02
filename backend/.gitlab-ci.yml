@@ -56,7 +56,7 @@ sonarqube-backend-sast:
   needs:
     - build-backend
   variables:
-    COMPILE: true
+    COMPILE: TRUE
 
 # Запуск проверки безопасности
 gitlab-sast:
