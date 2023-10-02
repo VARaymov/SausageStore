@@ -1,6 +1,6 @@
 stages:
   - build
-  #- test
+  - test
   - release
   - deploy
 
@@ -16,9 +16,9 @@ variables:
   TEXT: ${NEXUS_REPO_URL_FRONTEND}/sausage-store-front/sausage-store/${VERSION}/sausage-store-${VERSION}.tar.gz
 
 # Используем механизм кеширования, чтобы сохранять между задачами собранный фронтенд
-# cashe:
-#   paths:
-#     - frontend/dist
+cashe:
+  paths:
+    - frontend/dist
 
 build-frontend:
   stage: build
@@ -37,29 +37,31 @@ build-frontend:
     - docker push $CI_REGISTRY_IMAGE/sausage-frontend:$CI_COMMIT_SHA
 
 # Запуск проверки сонаром
-#sonarqube-frontend-sast:
-#  stage: test
-#  image: sonarsource/sonar-scanner-cli
-#  script:
-#    - cd frontend
-#    - >
-#      sonar-scanner -Dsonar.qualitygate.wait=true
-#      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} 
-#      -Dsonar.sources=.
-#      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} 
-#      -Dsonar.login=${SONAR_LOGIN_FRONTEND}
-#      -Dsonar.projectName="19_RAYUMOVVALERY_FRONTEND"
-#  needs:
-#    - build-frontend-code-job
+sonarqube-frontend-sast:
+  stage: test
+  variables:
+    COMPILE: "true"
+  image: sonarsource/sonar-scanner-cli
+  script:
+    - cd frontend
+    - >
+      sonar-scanner -Dsonar.qualitygate.wait=true
+      -Dsonar.projectKey=${SONAR_PROJECT_KEY_FRONTEND} 
+      -Dsonar.sources=.
+      -Dsonar.host.url=${SONARQUBE_URL_FRONTEND} 
+      -Dsonar.login=${SONAR_LOGIN_FRONTEND}
+      -Dsonar.projectName="19_RAYUMOVVALERY_FRONTEND"
+  needs:
+    - build-frontend
 
-# Запуск проверки секьюрити
-#gitlab-sast:
-#  stage: test
-#  needs:
-#    - build-frontend-code-job
-#  trigger:
-#    include:
-#      - template: Security/SAST.gitlab-ci.yml
+ Запуск проверки секьюрити
+gitlab-sast:
+  stage: test
+  needs:
+    - build-frontend
+  trigger:
+    include:
+      - template: Security/SAST.gitlab-ci.yml
 
 upload-frontend-latest:
   variables:
@@ -79,7 +81,7 @@ deploy-frontend:
   stage: deploy
   image: alpine:3.15.0
   # если хотим сделать деплой по кнопке
-  rules:
+  #rules:
   #  - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
   #    when: manual
   #  - if: '$CI_COMMIT_BRANCH == "master"'
