@@ -18,9 +18,9 @@ variables:
   JAVA_OPTS: -XX:MaxRAMPercentage=90 # для того, чтобы Maven не съел всю свободную оперативку
 
 # Используем механизм кеширования, чтобы сохранять между задачами maven-репозиторий со всеми выкаченными и скомпилированными артефактами
- cache:
-   paths:
-     - ${CI_PROJECT_DIR}/.m2/repository
+cache:
+  paths:
+    - ${CI_PROJECT_DIR}/.m2/repository
 
 build-backend:
   stage: build
