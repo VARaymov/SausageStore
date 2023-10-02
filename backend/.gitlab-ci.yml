@@ -40,6 +40,8 @@ build-backend:
 
 # Запуск проверки Сонаром
 sonarqube-backend-sast:
+  variables:
+    compile: true
   stage: test
   only:
     changes:
