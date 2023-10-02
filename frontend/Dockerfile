@@ -12,7 +12,7 @@ FROM node:16-slim
 RUN addgroup --system frontenduser \
 && adduser --system --disabled-password --home /home/frontenduser --shell /bin/false --group frontenduser 
 COPY --chown=frontenduser:frontenduser \
-     --from=builder /usr/src/app/dist/frontend ./dist/frontend
+     --from=builder /usr/src/app/dist/frontend ./frontend
 EXPOSE 80
 USER frontenduser
-ENTRYPOINT ["http-server", "dist/frontend/", "-p", "80", "--proxy", "http://backend:8080"]
+ENTRYPOINT ["http-server", "frontend/", "-p", "80", "--proxy", "http://backend:8080"]
