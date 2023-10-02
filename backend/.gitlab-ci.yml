@@ -55,8 +55,6 @@ sonarqube-backend-sast:
       -Dsonar.projectName="19_RAYUMOVVALERY_BACKEND"
   needs:
     - build-backend
-  variables:
-    - COMPILE: TRUE
 
 # Запуск проверки безопасности
 gitlab-sast:
