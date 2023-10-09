@@ -15,4 +15,5 @@ docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-
 docker-compose stop backend || true
 docker-compose rm backend || true
 set -e
-docker-compose --env-file backend.env up --pull always --wait -d backend
+#docker-compose --env-file backend.env up --pull always --wait -d backend
+docker-compose --env-file backend.env up  -d backend
