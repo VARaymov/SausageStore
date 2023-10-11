@@ -3,7 +3,8 @@ cat > backend-report.env <<EOF
 DB=${SPRING_MONGODB_URI}
 SPRING_CLOUD_VAULT_ENABLED=TRUE
 EOF
-docker login -u ${REGISTRY_USER} -p ${REGISTRY_PASSWORD} ${REGISTRY}
+echo "$CI_REGISTRY_PASSWORD" | docker login --username "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-backend-report:latest
 docker-compose stop backend-report || true
 docker-compose rm backend-report || true
 set -e
