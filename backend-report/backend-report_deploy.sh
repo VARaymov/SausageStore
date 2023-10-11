@@ -1,5 +1,5 @@
 set +e
-cat > backend-report.env >>EOF
+cat > backend-report.env <<EOF
 DB=${SPRING_MONGODB_URI}
 SPRING_CLOUD_VAULT_ENABLED=TRUE
 EOF
