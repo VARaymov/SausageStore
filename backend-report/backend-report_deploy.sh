@@ -8,4 +8,4 @@ docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-
 docker-compose stop backend-report || true
 docker-compose rm backend-report || true
 set -e
-docker-compose --env-file backend-report.env up backend-report -d
+docker-compose --env-file backend-report.env up -d backend-report
