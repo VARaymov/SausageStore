@@ -20,7 +20,7 @@ build-backend-report:
     - until docker info; do sleep 1; done
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - cd backend
+    - cd backend-report
     - >
       docker build
       --build-arg VERSION=$VERSION
