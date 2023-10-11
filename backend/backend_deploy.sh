@@ -8,6 +8,6 @@ EOF
 echo "$CI_REGISTRY_PASSWORD" | docker login --username "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
 docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-backend:latest
 docker-compose stop backend || true
-docker-compose rm backend || true
+docker-compose rm -f backend || true
 set -e
 docker-compose --env-file backend.env up -d backend
