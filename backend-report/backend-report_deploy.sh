@@ -1,6 +1,6 @@
 set +e
 cat > backend-report.env <<EOF
-DB=${SPRING_MONGODB_URI}
+SPRING_MONGODB_URI=${SPRING_MONGODB_URI}
 SPRING_CLOUD_VAULT_ENABLED=TRUE
 EOF
 echo "$CI_REGISTRY_PASSWORD" | docker login --username "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
