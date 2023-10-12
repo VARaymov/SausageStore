@@ -49,14 +49,15 @@ sonarqube-backend-report-sast:
     - cd backend-report
     - >
       sonar-scanner 
-        -Dsonar.projectKey=yandex-backend-report 
-        -Dsonar.sources=. 
-        -Dsonar.host.url=https://sonarqube.praktikum-services.ru 
-        -Dsonar.login=${SONAR_LOGIN_BACKEND_REPORT}
-        - echo ${SONAR_LOGIN_BACKEND_REPORT}
+      -Dsonar.projectKey=yandex-backend-report 
+      -Dsonar.sources=. 
+      -Dsonar.host.url=https://sonarqube.praktikum-services.ru 
+      -Dsonar.login=${SONAR_LOGIN_BACKEND_REPORT}
+      -echo ${SONAR_LOGIN_BACKEND_REPORT}
         #-Dsonar.projectName="19_RAYUMOVVALERY_BACKEND_REPORT"
   needs:
     - build-backend-report
+
 
 upload-backend-report-latest:
   variables:
