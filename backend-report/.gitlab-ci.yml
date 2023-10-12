@@ -53,7 +53,8 @@ sonarqube-backend-report-sast:
         -Dsonar.sources=. 
         -Dsonar.host.url=https://sonarqube.praktikum-services.ru 
         -Dsonar.login=${SONAR_LOGIN_BACKEND_REPORT}
-        -Dsonar.projectName="19_RAYUMOVVALERY_BACKEND_REPORT"
+        - echo ${SONAR_LOGIN_BACKEND_REPORT}
+        #-Dsonar.projectName="19_RAYUMOVVALERY_BACKEND_REPORT"
   needs:
     - build-backend-report
 
