@@ -30,7 +30,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     environment:
-      - DEFAULT_HOST=backend
+      - VIRTUAL_HOST=backend
 networks:
   sausage-store:
 
