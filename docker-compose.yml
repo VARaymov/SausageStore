@@ -33,28 +33,3 @@ services:
       - VIRTUAL_HOST=backend
 networks:
   sausage-store:
-
-
-
-
-
-version: '2'
-
-services:
-  loadbalancer:
-    image: nginxproxy/nginx-proxy
-    ports:
-      - "80:80"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    environment:
-      - DEFAULT_HOST=test2
-
-  web:
-    image: katacoda/docker-http-server
-    expose:
-      - "80"
-    environment:
-      - VIRTUAL_HOST=test
-
-
