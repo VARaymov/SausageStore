@@ -1,0 +1,31 @@
+version: "3.3" # версия формата файла Docker-Compose
+
+services:    
+  backend:    
+    image: gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-backend:latest
+    container_name: backend
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    networks:
+      - sausage-store
+  backend-report:
+    image: gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-backend-report:latest
+    container_name: backend-report
+    environment:
+      DB: ${REPORTS_MONGODB_URI}
+    networks:
+      - sausage-store
+  frontend:
+    image: gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-frontend:latest
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - sausage-store
+    restart: always
+networks:
+  sausage-store:
+
+
