@@ -21,12 +21,12 @@ server {
 
   location /api {
       proxy_pass http://{{ $host }};
-      access_log /var/log/nginx/access.log upstream_time;
+      access_log /var/log/nginx/access.log upstream;
   }
 }
 {{ end }}
 
-log_format upstream_time '$remote_addr - $remote_user [$time_local] '
+log_format upstream '$remote_addr - $remote_user [$time_local] '
 '"$request" $status $body_bytes_sent '
 '"$http_referer" "$http_user_agent"'
 'rt=$request_time uct="$upstream_connect_time" uht="$upstream_header_time" urt="$upstream_response_time"';
