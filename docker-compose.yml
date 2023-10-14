@@ -8,8 +8,7 @@ services:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    environment:
-      - DEFAULT_HOST=backend
+      DEFAULT_HOST: backend
     networks:
       - sausage-store
   backend-report:
@@ -30,6 +29,6 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     environment:
-      - VIRTUAL_HOST=backend
+      VIRTUAL_HOST: backend
 networks:
   sausage-store:
