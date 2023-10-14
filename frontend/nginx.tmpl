@@ -26,6 +26,7 @@ server {
 
   location /api {
       proxy_pass http://{{ $host }};
+      access_log /spool/logs/nginx-access.log upstream;
   }
 }
 {{ end }}
