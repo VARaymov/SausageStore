@@ -25,7 +25,7 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       VIRTUAL_HOST: backend
-      REPORT_PATH: .
+      REPORT_PATH: app
     healthcheck:
       test: curl --fail -s http://localhost:8080/actuator/health
       interval: 30s
