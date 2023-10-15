@@ -10,8 +10,8 @@ docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-
 if [[ "$(docker ps --filter "name=green-backend" -q)" ]]; then
 	echo "Уже запущен green-backend"
 	HEALTHY=false
-	while [ "$HEALTHY" != "true" ]; do
-		HEALTHY=$(docker inspect -f "{{.State.Status}}" green-backend)
+	while [ "$HEALTHY" != "healthy" ]; do
+		HEALTHY=$(docker inspect --format '{{.State.Health.Status}}' green-backend)
 		sleep 15
 		if [ "$HEALTHY" == "exited" ]; then
 			echo "Состояние green-backend не true"
@@ -25,8 +25,8 @@ elif [[ "$(docker ps --filter "name=blue-backend" -q)" ]]; then
 	docker-compose --env-file backend.env up -d green-backend
 	sleep 15
 	HEALTHY=false
-	while [ "$HEALTHY" != "true" ]; do
-		HEALTHY=$(docker inspect -f "{{.State.Status}}" green-backend)
+	while [ "$HEALTHY" != "healthy" ]; do
+		HEALTHY=$(docker inspect --format '{{.State.Health.Status}}' green-backend)
 		sleep 15
 		if [ "$HEALTHY" == "exited" ]; then
 			echo "Состояние green-backend не true"
