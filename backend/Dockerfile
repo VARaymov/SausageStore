@@ -27,7 +27,7 @@ RUN keytool -importcert -file YandexInternalRootCA.crt \
     && apk add --no-cache dumb-init==1.2.5-r0 \
     && apk update && apk add curl \
     && touch report.txt \
-    && chmod +x report.txt
+    && chmod +x report.txt \
     && chown=jaruser:jaruser report.txt
 COPY --chown=jaruser:jaruser \
      --from=builder /usr/src/app/target/sausage-store-${VERSION}.jar ./sausage-store.jar
