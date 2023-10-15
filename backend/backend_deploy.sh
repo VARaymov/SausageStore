@@ -8,7 +8,11 @@ EOF
 echo "$CI_REGISTRY_PASSWORD" | docker login --username "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
 docker pull gitlab.praktikum-services.ru:5050/std-019-002/sausage-store/sausage-backend:latest
 CURRENT_CONTAINER="0"
-if docker ps --filter "name=blue-backend" -q; then
+if [[ "$(docker ps --filter "name=green-backend" -q)" ]]; then
+    CURRENT_CONTAINER="green-backend"
+	echo "Уже запущен green-backend"
+	exit 0
+elif [[ "$(docker ps --filter "name=blue-backend" -q)" ]]; then
     CURRENT_CONTAINER="blue-backend"
 	echo "Запущен blue-backend, будет запущен green-backend"
 	docker-compose --env-file backend.env up -d green-backend
@@ -24,10 +28,6 @@ if docker ps --filter "name=blue-backend" -q; then
 	done
 	echo "green-backend запущен успешно, blue-backend будет остановлен"
 	docker-compose stop blue-backend
-	exit 0
-elif docker ps --filter "name=green-backend" -q; then
-    CURRENT_CONTAINER="green-backend"
-	echo "Уже запущен green-backend"
 	exit 0
 else
     docker-compose --env-file backend.env up -d green-backend
