@@ -28,7 +28,7 @@ RUN keytool -importcert -file YandexInternalRootCA.crt \
     && apk update && apk add curl \
     && touch report.txt \
     && chmod +x report.txt \
-    && chown=jaruser:jaruser report.txt
+    && chown=jaruser:jaruser /app/report.txt
 COPY --chown=jaruser:jaruser \
      --from=builder /usr/src/app/target/sausage-store-${VERSION}.jar ./sausage-store.jar
 EXPOSE 8080
