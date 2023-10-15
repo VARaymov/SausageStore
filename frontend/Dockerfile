@@ -1,17 +1,12 @@
 FROM node:16 as builder
-# Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY . .
 RUN npm install \
 && npm run build
 
-# release
-FROM node:16-slim
-RUN npm install -g http-server \
-&& addgroup --system frontenduser \
-&& adduser --system --disabled-password --home /home/frontenduser --shell /bin/false --group frontenduser 
-COPY --chown=frontenduser:frontenduser \
-     --from=builder /usr/src/app/dist/frontend ./frontend
+FROM nginxproxy/nginx-proxy
+COPY --from=builder /app/dist/frontend/ /usr/share/nginx/html
+COPY --from=builder /app/nginx.tmpl /app/nginx.tmpl
 EXPOSE 80
-USER frontenduser
-ENTRYPOINT ["http-server", "./frontend/", "-p", "80", "--proxy", "http://backend:8080"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+CMD ["forego", "start", "-r"]
