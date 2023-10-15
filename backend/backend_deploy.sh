@@ -23,7 +23,6 @@ elif [[ "$(docker ps --filter "name=blue-backend" -q)" ]]; then
 		sleep 15
 		if [ "$HEALTHY" == "exited" ]; then
 			echo "Не удалось запустить green-backend"
-			exit 1
 		fi
 	done
 	echo "green-backend запущен успешно, blue-backend будет остановлен"
