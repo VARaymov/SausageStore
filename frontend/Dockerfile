@@ -6,7 +6,6 @@ RUN npm install \
 
 FROM nginxproxy/nginx-proxy
 COPY --from=builder /app/dist/frontend/ /usr/share/nginx/html
-COPY --from=builder /app/nginx.tmpl /app/nginx.tmpl
 EXPOSE 80
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD ["forego", "start", "-r"]
